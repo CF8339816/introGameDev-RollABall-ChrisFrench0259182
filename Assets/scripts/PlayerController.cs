@@ -1,16 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+    
+    private Rigidbody rb;// Rigidbody for MrBall
+
+
+    private float movementX;  // Movement along X axes
+    private float movementY;  // Movement along Y axes
+
+
+    public float speed = 0; // Speed MrBall moves
+
+   
+    void Start() // Start called before first frame update
+    { 
+        rb = GetComponent<Rigidbody>();  // Get & stores Rigidbody attached to MrBall
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    void OnMove(InputValue movementValue)  // Function called when movement input detected
     {
-        
+       Vector2 movementVector = movementValue.Get<Vector2>();    // Converts input value into Vector2 inputfor movement
+              
+        movementX = movementVector.x;// Stores the X movement
+        movementY = movementVector.y;// Stores the y movement
+    }
+
+    
+    private void FixedUpdate() // FixedUpdate called once per fixed f-r frame
+    {
+        Vector3 movement = new Vector3(movementX, 0.0f, movementY);  // Creates 3D move vector using  X and Y input
+       
+        rb.AddForce(movement * speed); // Applies force to  Rigidbody to move MrBall
     }
 }
