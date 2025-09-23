@@ -673,10 +673,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4f23a6ac2e1f004da1ad803bdab1732, type: 3}
+  m_Script: {fileID: 11500000, guid: ce375cb06db25df4ba6c0978fc2d595d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MrBall: {fileID: 852067418}
+  player: {fileID: 852067418}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,7 +898,7 @@ GameObject:
   - component: {fileID: 852067424}
   - component: {fileID: 852067423}
   m_Layer: 0
-  m_Name: MrBall
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
