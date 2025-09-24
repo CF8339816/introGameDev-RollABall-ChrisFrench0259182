@@ -15,14 +15,15 @@ public class PlayerController : MonoBehaviour
 
 
     public float speed = 0; // Speed MrBall moves
-    public TextMeshProUGUI countText;
+    public TextMeshProUGUI countText; //creates Count Text obj
+    public GameObject winTextObject;  //creates win text obj
 
     void Start() // Start called before first frame update
     {
         rb = GetComponent<Rigidbody>();  // Get & stores Rigidbody attached to MrBall
         count = 0; // sets counter to 0
         SetCountText(); //updates count
-       // Win32Exception TextObject.SetActive(false);
+        winTextObject.SetActive(false);
     }
 
     void OnMove(InputValue movementValue)  // Function called when movement input detected
@@ -36,10 +37,10 @@ public class PlayerController : MonoBehaviour
        {
            countText.text = "Wayward Capsuels Wrangled: " + count.ToString(); // sets count to output to string
 
-        //   if (count >= 12)  //checks ammount collected
-       //   {
-        //     winTextObject.SetActive(true);
-        //  }
+           if (count >= 12)  //checks ammount collected
+         {
+             winTextObject.SetActive(true);
+          }
        }
    
 
