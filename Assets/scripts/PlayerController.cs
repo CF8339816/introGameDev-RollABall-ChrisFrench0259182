@@ -1,55 +1,80 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using TMPro;
 public class PlayerController : MonoBehaviour
 {
-    // Rigidbody of the player.
-    private Rigidbody rb;
 
-    // Movement along X and Y axes.
-    private float movementX;
-    private float movementY;
+    private Rigidbody rb;// Rigidbody for MrBall
+    private int count;  //Adds a counter
 
-    // Speed at which the player moves.
-    public float speed = 0;
+    private float movementX;  // Movement along X axes
+    private float movementY;  // Movement along Y axes
 
-    // Start is called before the first frame update.
-    void Start()
+
+    public float speed = 0; // Speed MrBall moves
+    public TextMeshProUGUI countText;
+
+    void Start() // Start called before first frame update
     {
-        // Get and store the Rigidbody component attached to the player.
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();  // Get & stores Rigidbody attached to MrBall
+        count = 0; // sets counter to 0
+        SetCountText(); //updates count
+       // Win32Exception TextObject.SetActive(false);
     }
 
-    // This function is called when a move input is detected.
-    void OnMove(InputValue movementValue)
+    void OnMove(InputValue movementValue)  // Function called when movement input detected
     {
-        // Convert the input value into a Vector2 for movement.
-        Vector2 movementVector = movementValue.Get<Vector2>();
+        Vector2 movementVector = movementValue.Get<Vector2>();    // Converts input value into Vector2 inputfor movement
 
-        // Store the X and Y components of the movement.
-        movementX = movementVector.x;
-        movementY = movementVector.y;
+        movementX = movementVector.x;// Stores the X movement
+        movementY = movementVector.y;// Stores the y movement
     }
+      void SetCountText()
+       {
+           countText.text = "Wayward Capsuels Wrangled: " + count.ToString(); // sets count to output to string
 
-    // FixedUpdate is called once per fixed frame-rate frame.
-    private void FixedUpdate()
+        //   if (count >= 12)  //checks ammount collected
+       //   {
+        //     winTextObject.SetActive(true);
+        //  }
+       }
+   
+
+
+
+    private void FixedUpdate() // FixedUpdate called once per fixed f-r frame
     {
-        // Create a 3D movement vector using the X and Y inputs.
-        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+        Vector3 movement = new Vector3(movementX, 0.0f, movementY);  // Creates 3D move vector using  X and Y input
 
-        // Apply force to the Rigidbody to move the player.
-        rb.AddForce(movement * speed);
+        rb.AddForce(movement * speed); // Applies force to  Rigidbody to move MrBall
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // Check if the object the player collided with has the "PickUp" tag.
-        if (other.gameObject.CompareTag("PickUp"))
+        if (other.gameObject.CompareTag("PickUp")) //checks obj ffor PickUp tag
         {
-            // Deactivate the collided object (making it disappear).
-            other.gameObject.SetActive(false);
-        }
+            other.gameObject.SetActive(false); //deactivates obj when collided
+           
+            count++; //adds 1 to count when picked up
+           SetCountText();   //calls SetCountText method
+        } 
+        
     }
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
