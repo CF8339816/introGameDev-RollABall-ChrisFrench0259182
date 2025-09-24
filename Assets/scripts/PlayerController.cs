@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    
+
     private Rigidbody rb;// Rigidbody for MrBall
 
 
@@ -17,26 +17,36 @@ public class PlayerController : MonoBehaviour
 
     public float speed = 0; // Speed MrBall moves
 
-   
+
     void Start() // Start called before first frame update
-    { 
+    {
         rb = GetComponent<Rigidbody>();  // Get & stores Rigidbody attached to MrBall
     }
 
-    
+
     void OnMove(InputValue movementValue)  // Function called when movement input detected
     {
-       Vector2 movementVector = movementValue.Get<Vector2>();    // Converts input value into Vector2 inputfor movement
-              
+        Vector2 movementVector = movementValue.Get<Vector2>();    // Converts input value into Vector2 inputfor movement
+
         movementX = movementVector.x;// Stores the X movement
         movementY = movementVector.y;// Stores the y movement
     }
 
-    
-    private void FixedUpdate() // FixedUpdate called once per fixed f-r frame
+
+    void FixedUpdate() // FixedUpdate called once per fixed f-r frame
     {
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);  // Creates 3D move vector using  X and Y input
-       
+
         rb.AddForce(movement * speed); // Applies force to  Rigidbody to move MrBall
+    }
+
+     void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("PickUp")) //checks obj ffor PickUp tag
+        {
+       
+        other.gameObject.SetActive(false); //deactivates obj when collided
+
+        }
     }
 }
