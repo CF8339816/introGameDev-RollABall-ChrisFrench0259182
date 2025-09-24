@@ -4,12 +4,12 @@ using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using TMPpro;
 public class PlayerController : MonoBehaviour
 {
 
     private Rigidbody rb;// Rigidbody for MrBall
-
+    private int count;  //Adds a counter
 
     private float movementX;  // Movement along X axes
     private float movementY;  // Movement along Y axes
@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
     void Start() // Start called before first frame update
     {
         rb = GetComponent<Rigidbody>();  // Get & stores Rigidbody attached to MrBall
+        count = 0; // sets counter to 0
+        SetCountText(); //updates count
+        Win32Exception TextObject.SetActive(false);
     }
 
 
@@ -33,7 +36,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void FixedUpdate() // FixedUpdate called once per fixed f-r frame
+    private void FixedUpdate() // FixedUpdate called once per fixed f-r frame
     {
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);  // Creates 3D move vector using  X and Y input
 
@@ -46,7 +49,32 @@ public class PlayerController : MonoBehaviour
         {
        
         other.gameObject.SetActive(false); //deactivates obj when collided
-
+            count++; //adds 1 to count when picked up
+            setCountText();   //calls SetCountText method
         }
     }
+
+    void SetCountText()
+    {
+        countText.text = "Count " + count.ToString(); // sets count to output to string
+
+      //  if (count >= 12)  //checks ammount collected
+      //  {
+       //     winTextObject.SetActive(true);
+       // }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
