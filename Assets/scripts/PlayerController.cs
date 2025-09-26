@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     }
       void SetCountText()
        {
-           countText.text = "Wayward Capsuels Wrangled: " + count.ToString(); // sets count to output to string
+           countText.text = "Wayward Capsules Wrangled: " + count.ToString(); // sets count to output to string
 
            if (count >= 12)  //checks ammount collected
          {
