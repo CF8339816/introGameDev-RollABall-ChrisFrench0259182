@@ -40,7 +40,8 @@ public class PlayerController : MonoBehaviour
            if (count >= 12)  //checks ammount collected
          {
              winTextObject.SetActive(true);
-          }
+            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+        }
        }
    
 
@@ -63,6 +64,17 @@ public class PlayerController : MonoBehaviour
            SetCountText();   //calls SetCountText method
         } 
         
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            
+            Destroy(gameObject);// Destroy player object
+
+            winTextObject.gameObject.SetActive(true);              // Update the winText for loss
+            winTextObject.GetComponent<TextMeshProUGUI>().text = "WhaaaaH Waaahhhaaahhhhaaa  You Lose!";
+        }
     }
 }
 
