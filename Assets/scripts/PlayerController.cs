@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-public class PlayerController : MonoBehaviour
+public class layerController : MonoBehaviour
 {
 
     private Rigidbody rb;// Rigidbody for MrBall
