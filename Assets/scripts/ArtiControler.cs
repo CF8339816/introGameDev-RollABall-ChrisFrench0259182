@@ -1,26 +1,17 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class ArtiControler : MonoBehaviour
 {
   
     private Rigidbody rb;
-
-   
     private int count;
-
-  
     private float movementX;
     private float movementY;
-
- 
     public float speed = 0;
-
- 
     public TextMeshProUGUI countText;
-
-  
     public GameObject winTextObject;
 
    
@@ -28,15 +19,11 @@ public class ArtiControler : MonoBehaviour
     {
        
         rb = GetComponent<Rigidbody>();
-
-       
         count = 0;
-
-       
         SetCountText();
-
-     
         winTextObject.SetActive(false);
+
+
     }
 
  
@@ -49,47 +36,60 @@ public class ArtiControler : MonoBehaviour
         movementX = movementVector.x;
         movementY = movementVector.y;
     }
+    void SetCountText()
+    {
+        countText.text = "Lost ARTI units recovered: " + count.ToString(); // sets count to output to string
 
-  
+        if (count >= 9)  //checks ammount collected
+        {
+            winTextObject.SetActive(true);
+            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+        }
+    }
+
+
     private void FixedUpdate()
     {
    
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
 
-    
+
+        if (movement != Vector3.zero)
+
+            //  transform.rotation = Quaternion.LookRotation(movement); // basic snapped rotation
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15f); //smooths out rotation 
+  
+
+          transform.Translate(movement * speed * Time.deltaTime, Space.World);
+
+
         rb.AddForce(movement * speed);
     }
 
 
+
+
     void OnTriggerEnter(Collider other)
     {
-   
-        if (other.gameObject.CompareTag("PickUp"))
+        if (other.gameObject.CompareTag("PickUp")) //checks obj ffor PickUp tag
         {
-          
-            other.gameObject.SetActive(false);
+            other.gameObject.SetActive(false); //deactivates obj when collided
 
-       
-            count = count + 1;
-
-        
-            SetCountText();
+            count++; //adds 1 to count when picked up
+            SetCountText();   //calls SetCountText method
         }
-    }
 
- 
-    void SetCountText()
+    }
+    private void OnCollisionEnter(Collision collision)
     {
-   
-        countText.text = "Count: " + count.ToString();
-
-       
-        if (count >= 9)
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-         
-            winTextObject.SetActive(true);
+
+            Destroy(gameObject);// Destroy player object
+
+            winTextObject.gameObject.SetActive(true);              // Update the winText for loss
+            winTextObject.GetComponent<TextMeshProUGUI>().text = " Pirates win Mission Failed";
         }
     }
-
 
 }
